@@ -1,0 +1,84 @@
+
+-- PROJETO BANCO DE DADOS - JOGO RPG Senai
+-- SGBD: MySQL
+
+-- Criando o banco de dados
+CREATE DATABASE IF NOT EXISTS JogoRPG;
+
+-- Selecionando o banco
+USE JogoRPG;
+
+-- Conferindo o banco selecionado
+SELECT DATABASE();
+
+
+-- Criando a tabela USUARIOS
+CREATE TABLE USUARIOS (
+    UsuarioId INT AUTO_INCREMENT PRIMARY KEY,
+    Email VARCHAR(150),
+    Senha VARCHAR(255)
+);
+
+
+-- Criando a tabela CLASSES
+CREATE TABLE CLASSES (
+    ClasseId INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100),
+    Descricao VARCHAR(255)
+);
+
+
+-- Criando a tabela HABILIDADES
+CREATE TABLE HABILIDADES (
+    HabilidadeId INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100)
+);
+
+
+-- Criando a tabela PERSONAGENS
+CREATE TABLE PERSONAGENS (
+    PersonagemId INT AUTO_INCREMENT PRIMARY KEY,
+    NomePersonagem VARCHAR(100),
+    UsuarioId INT,
+    ClasseId INT,
+    FOREIGN KEY (UsuarioId) REFERENCES USUARIOS(UsuarioId),
+    FOREIGN KEY (ClasseId) REFERENCES CLASSES(ClasseId)
+);
+
+
+-- Criando a tabela CLASSES_HABILIDADES
+CREATE TABLE CLASSES_HABILIDADES (
+    ClasseId INT,
+    HabilidadeId INT,
+    PRIMARY KEY (ClasseId, HabilidadeId),
+    FOREIGN KEY (ClasseId) REFERENCES CLASSES(ClasseId),
+    FOREIGN KEY (HabilidadeId) REFERENCES HABILIDADES(HabilidadeId)
+);
+
+SHOW TABLES;
+DESCRIBE PERSONAGENS;
+DESCRIBE CLASSES_HABILIDADES;
+
+-- Criando tabela temporária para praticar ALTER TABLE
+CREATE TABLE TESTE_ALTERACAO (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100)
+);
+
+-- Adicionando uma coluna na tabela
+ALTER TABLE TESTE_ALTERACAO
+ADD COLUMN Descricao VARCHAR(200);
+DESCRIBE TESTE_ALTERACAO;
+
+
+
+-- Excluindo  coluna da tabela
+ALTER TABLE TESTE_ALTERACAO
+DROP COLUMN Descricao;
+
+DESCRIBE TESTE_ALTERACAO;
+
+-- Excluindo  tabela de teste feita
+DROP TABLE TESTE_ALTERACAO;
+
+SHOW TABLES;
